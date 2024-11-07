@@ -59,6 +59,10 @@ jobs:
         with:
           name: flutter-web-app
 
+      - name: Verify Downloaded Artifact
+        run: dir flutter-web-app  # Checks that the artifact is successfully downloaded and lists its contents
+
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
