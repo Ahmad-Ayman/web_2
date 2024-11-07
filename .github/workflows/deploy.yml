@@ -52,7 +52,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -66,4 +66,4 @@ jobs:
           app-name: 'habeba'  # Replace with your Azure Web App name
           slot-name: 'Production'
           package: build/web
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_8f739261fa1548c2a977358a00306ed0 }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
