@@ -20,9 +20,9 @@ jobs:
       - name: Set Up Java
         uses: actions/setup-java@v3.12.0
         with:
-            distribution: 'oracle'
-            java-version: '17'
-              
+          distribution: 'oracle'
+          java-version: '17'
+
       - name: Install Dart
         uses: dart-lang/setup-dart@v1
         with:
@@ -31,8 +31,8 @@ jobs:
       - name: Set Up Flutter
         uses: subosito/flutter-action@v2
         with:
-            flutter-version: '3.24.3'
-            channel: 'stable'
+          flutter-version: '3.24.3'
+          channel: 'stable'
 
       - name: Install Flutter dependencies
         run: flutter pub get
@@ -44,29 +44,28 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: flutter-web-app
-          path: build/web
+          path: build/web  # Uploads the built web files
 
   deploy:
     runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: flutter-web-app
+          path: ./flutter-web-app  # Explicitly downloads to ./flutter-web-app directory
 
       - name: Verify Downloaded Artifact
-        run: dir flutter-web-app  # Checks that the artifact is successfully downloaded and lists its contents
-
+        run: dir ./flutter-web-app  # Checks that the artifact is successfully downloaded and lists contents
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'habeba'  # Replace with your Azure Web App name
-          package: build/web
+          package: ./flutter-web-app  # Specifies the correct path for deployment
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
