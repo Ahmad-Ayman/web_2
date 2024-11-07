@@ -17,10 +17,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      - name: Set Up Java
+        uses: actions/setup-java@v3.12.0
+        with:
+            distribution: 'oracle'
+            java-version: '17'
+              
+      - name: Install Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Set Up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+            flutter-version: '3.24.3'
+            channel: 'stable'
 
       - name: Install Flutter dependencies
         run: flutter pub get
